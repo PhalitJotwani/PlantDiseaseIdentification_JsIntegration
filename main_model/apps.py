@@ -1,10 +1,9 @@
 from django.apps import AppConfig
-import pathlib
 from PIL import Image
-
+from django.conf import settings
 import numpy as np
+import os
 import tensorflow as tf
-
 
 class TensorflowLiteClassificationModel:
     def __init__(self, model_path, labels, image_size=224):
@@ -28,12 +27,6 @@ class TensorflowLiteClassificationModel:
         return self.run(image)
 
     def run(self, image):
-        """
-        args:
-          image: a (1, image_size, image_size, 3) np.array
-
-        Returns list of [Label, Probability], of type List<str, float>
-        """
 
         self.interpreter.set_tensor(self._input_details[0]["index"], image)
         self.interpreter.invoke()
@@ -58,5 +51,4 @@ class MainModelConfig(AppConfig):
           'Corn Gray Leaf Spot'
           ]
     # Load TFLite model and allocate tensors.
-    model = TensorflowLiteClassificationModel("/mnt/6CC06C2FC06C0226/MyFiles/Projects/hackTU4/backend_model/main_model/cnn_model/model.tflite",labels=labels)
-    # res = model.run_from_filepath("test_imgs/AppleCedarRust2.JPG")[0]
+    model = TensorflowLiteClassificationModel(os.path.join(settings.BASE_DIR,"main_model/cnn_model/model.tflite"),labels=labels)
