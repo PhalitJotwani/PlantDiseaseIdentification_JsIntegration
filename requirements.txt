@@ -1,7 +1,5 @@
 Django==4.1
 djangorestframework==3.13.1
-tmp/build/80754af9/numexpr_1618856529730/work
-numpy==1.22.3
 Pillow==9.0.1
 tensorboard==2.8.0
 tensorboard-data-server==0.6.1
